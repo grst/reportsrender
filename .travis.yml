@@ -1,0 +1,5 @@
+# https://www.mattlayman.com/blog/2018/python-code-black/
+# will fail the CI if not correctly formatted.
+black --check src_dir/
+
+

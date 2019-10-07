@@ -1,0 +1,32 @@
+[build-system]
+requires = ['flit']
+build-backend = 'flit.buildapi'
+
+[tool.flit.metadata]
+module = 'reportsrender'
+author = 'Gregor Sturm'
+author-email = 'mail@gregor-sturm.de'
+home-page = 'https://github.com/grst/reportsrender'
+description-file = 'README'
+classifiers = [
+    'License :: OSI Approved :: The MIT License',
+    'Development Status :: 4 - Beta',
+    'Intended Audience :: Developers',
+    'Intended Audience :: Science/Research',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: R'
+]
+requires-python = '>= 3.6'
+requires = [
+    'get_version',
+    'rpy2 >= 3.0.1',
+    'tzlocal',  # for pandas2ri
+    'anndata',
+]
+
+[tool.flit.metadata.requires-extra]
+test = [
+    'pytest',
+    'pytest-faulthandler'
+]
+
