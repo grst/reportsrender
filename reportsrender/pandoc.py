@@ -12,11 +12,13 @@ def run_pandoc(
     in_file,
     out_file,
     res_path=RES_PATH,
-    template_name=DEFAULT_TEMPLATE,
-    css_name=DEFAULT_CSS,
+    template_file=DEFAULT_TEMPLATE,
+    css_file=DEFAULT_CSS,
 ):
     """
-    Run pandoc
+    Convert to html using pandoc.
+
+    Will create a standalone, self-contained html based on the specified template.
     """
     cmd = """
           pandoc \
@@ -43,8 +45,8 @@ def run_pandoc(
     cmd2 = cmd.format(
         input_file=in_file,
         output_file=out_file,
-        html_template=template_name,
-        css_file=css_name,
+        html_template=template_file,
+        css_file=css_file,
         res_path=res_path,
     )
     check_call(cmd2, shell=True)

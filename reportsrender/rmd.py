@@ -1,22 +1,3 @@
-#!/usr/bin/env python3
-"""render_rmd.py
-
-Execute and render a parametrized Rmarkdown notebook.
-
-Usage:
-  render_rmd.py <notebook> <out_file> [options]
-  render_rmd.py (-h | --help)
-
-Options:
-  -h --help             Show this screen.
-  --cpus=<cpus>         Number of CPUs to use for Numba/Numpy. [default: 1]
-  --params=<params>     space-separated list of key-value pairs. E.g.
-                        "input_file=dir/foo.txt output_file=dir2/bar.html"
-
-"""
-
-from docopt import docopt
-from .util import set_cpus, parse_params
 from subprocess import call
 from shutil import copyfile
 import os
@@ -74,12 +55,3 @@ def render_rmd(input_file, output_file, params=None):
     cmd = ["Rscript", "--vanilla", "-e", rmd_cmd]
 
     call(cmd)
-
-
-if __name__ == "__main__":
-    arguments = docopt(__doc__)
-    params = parse_params(arguments["--params"])
-
-    set_cpus(arguments["--cpus"])
-
-    render_rmd(arguments["<notebook>"], arguments["<out_file>"], params)
