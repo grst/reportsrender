@@ -18,10 +18,11 @@ classifiers = [
 ]
 requires-python = '>= 3.6'
 requires = [
-    'get_version',
-    'rpy2 >= 3.0.1',
-    'tzlocal',  # for pandas2ri
-    'anndata',
+    'docopt',
+    'ipython',
+    'jupytext',
+    'papermill',
+    'nbconvert'
 ]
 
 [tool.flit.metadata.requires-extra]

@@ -16,7 +16,7 @@ Options:
 """
 
 from docopt import docopt
-from util import set_cpus, parse_params
+from .util import set_cpus, parse_params
 from subprocess import call
 from shutil import copyfile
 import os

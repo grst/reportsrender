@@ -1,2 +1,2 @@
-from render_papermill import render_papermill
-from render_rmd import render_rmd
+from .papermill import render_papermill
+from .rmd import render_rmd
