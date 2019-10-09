@@ -48,11 +48,20 @@ def _remove_cells(nb):
 
     """
     tag_remove_preprocessor = TagRemovePreprocessor(
-        remove_cell_tags=["remove_cell"],
-        remove_all_outputs_tags=["hide_output"],
-        remove_input_tags=["hide_input"],
+        remove_cell_tags=["hide_cell", "remove_cell"],
+        remove_all_outputs_tags=["hide_output", "remove_output"],
+        remove_input_tags=["hide_input", "remove_input"],
     )
     nb, _ = tag_remove_preprocessor.preprocess(nb, None)
+    # The tag remove preprocessor only adds `transient: 'remove_source'`
+    # to each cell. This option is not understood by pandoc.
+    # We will therefore remove the contents from the `source` field.
+    for cell in nb.cells:
+        try:
+            if cell["transient"]["remove_source"]:
+                cell["source"] = ""
+        except KeyError:
+            pass
     return nb
 
 
