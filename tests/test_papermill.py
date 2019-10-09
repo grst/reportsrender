@@ -80,16 +80,17 @@ def test_remove_cells():
     assert "REMOVE_CELL" not in str_repr
 
 
-def test_render_papermill():
-    with open("results/02_analyze_data_rmd/report.html") as f:
-        report_rmd = f.read()
+def test_render_papermill(tmp_path):
+    in_file = "notebooks/02_analyze_data.Rmd"
+    out_file = tmp_path / "report.html"
+    params = {"input_file": "notebooks/iris.tsv"}
+    render_papermill(in_file, out_file, params)
 
-    with open("results/02_analyze_data_papermill/report.html") as f:
-        report_papermill = f.read()
+    result = out_file.read_text()
 
-    # assert "ECHO_FALSE" not in contents, "{}: hide input works".format(name)
-    # assert "RESULTS_HIDE" not in contents, "{}: hide output works".format(name)
-    # assert "ECHO_TRUE_01" in contents, "{}, show input works".format(name)
-    # assert "ECHO_TRUE_02" in contents, "{}, show input works".format(name)
-    # assert "RESULTS_SHOW_01" in contents, "{}, show results works".format(name)
-    # assert "RESULTS_SHOW_02" in contents, "{}, show results works".format(name)
+    assert "ECHO_FALSE" not in result
+    assert "RESULTS_HIDE" not in result
+    assert "ECHO_TRUE_01" in result
+    assert "ECHO_TRUE_02" in result
+    assert "RESULTS_SHOW_01" in result
+    assert "RESULTS_SHOW_02" in result

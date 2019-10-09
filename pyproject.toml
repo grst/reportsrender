@@ -22,7 +22,8 @@ requires = [
     'ipython',
     'jupytext',
     'papermill',
-    'nbconvert'
+    'nbconvert',
+    'ipykernel'
 ]
 
 [tool.flit.metadata.requires-extra]

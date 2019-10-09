@@ -20,7 +20,6 @@ jupyter:
 Load some packages, do some analysis, generate some plots...
 
 ```{python}
-import matplotlib.pyplot as plt
 import pandas as pd
 ```
 
@@ -82,7 +81,7 @@ print("TEST: " + "_".join(("RESULTS", "SHOW", "02")))
 for i in range(10):
     print("The {i}th Fibonacci number is {f}".format(i=i, f=fib(i)))
 
-plt.plot(range(10), [fib(x) for x in range(10)])
+# plt.plot(range(10), [fib(x) for x in range(10)])
 ```
 
 
@@ -93,7 +92,7 @@ print("TEST: " + "_".join(("RESULTS", "HIDE")))
 for i in range(10):
     print("The {i}th Fibonacci number is {f}".format(i=i, f=fib(i)))
 
-plt.plot(range(10), [fib(x) for x in range(10)])
+# plt.plot(range(10), [fib(x) for x in range(10)])
 ```
 
 
@@ -103,17 +102,5 @@ Include the 'highlights' here and repeat the corresponding figures.
 
 ```{python echo=FALSE}
 iris = pd.read_csv(input_file, sep="\t")
-import matplotlib.cm as cmx
-import matplotlib.colors as colors
-
-uniq = list(set(iris['Species']))
-
-hot = plt.get_cmap('hot')
-cNorm  = colors.Normalize(vmin=0, vmax=len(uniq))
-scalarMap = cmx.ScalarMappable(norm=cNorm, cmap=hot)
-
-
-for i in range(len(uniq)):
-    indx = iris['Species'] == uniq[i]
-    plt.scatter(iris["Sepal.Width"][indx], iris["Sepal.Length"][indx], s=15, color=scalarMap.to_rgba(i), label=uniq[i])
+print(iris)
 ```

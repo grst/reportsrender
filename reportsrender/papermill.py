@@ -88,9 +88,18 @@ def render_papermill(input_file, output_file, params=None):
 
     with NamedTemporaryFile(suffix=".ipynb") as tmp_nb_converted:
         with NamedTemporaryFile(suffix=".ipynb") as tmp_nb_executed:
-            nb = jtx.read(input_file)
-            _prepare_cell_tags(nb)
-            _remove_cells(nb)
-            jtx.write(nb, tmp_nb_converted.name)
-            _run_papermill(tmp_nb_converted.name, tmp_nb_executed.name, params=params)
-            run_pandoc(tmp_nb_executed.name, output_file)
+            with NamedTemporaryFile(suffix=".ipynb") as tmp_nb_cleaned:
+                # convert to ipynb
+                nb = jtx.read(input_file)
+                jtx.write(nb, tmp_nb_converted.name)
+                # execute notebook
+                _run_papermill(
+                    tmp_nb_converted.name, tmp_nb_executed.name, params=params
+                )
+                # hide inputs, outputs etc.
+                nb_exec = jtx.read(tmp_nb_executed.name)
+                _prepare_cell_tags(nb_exec)
+                _remove_cells(nb_exec)
+                jtx.write(nb_exec, tmp_nb_cleaned.name)
+                # convert to html
+                run_pandoc(tmp_nb_cleaned.name, output_file)
