@@ -1,4 +1,14 @@
-from reportsrender.rmd import render_rmd
+from reportsrender.rmd import render_rmd, _run_rmarkdown
+
+
+def test_run_rmarkdown(tmp_path):
+    """Test that running Rmarkdown generates a .utf8.md file. """
+    in_file = "notebooks/01_generate_data.Rmd"
+    md_file = _run_rmarkdown(in_file, tmp_path)
+    assert md_file.endswith(".utf8.md")
+    with open(md_file) as f:
+        text = f.read()
+        assert "library" in text
 
 
 def test_render_rmd(tmp_path):

@@ -1,7 +1,9 @@
 from subprocess import check_call
 from shutil import copyfile
-from tempfile import NamedTemporaryFile
+from tempfile import NamedTemporaryFile, TemporaryDirectory
+from .pandoc import run_pandoc, RES_PATH
 import os
+import re
 
 
 def _literal_to_r_str(value):
@@ -17,15 +19,18 @@ def _literal_to_r_str(value):
             return str(value)
 
 
-def render_rmd(input_file, output_file, params=None):
+def _run_rmarkdown(input_file, out_dir, params=None):
     """
-    Wrapper function to render an Rmarkdown document the way I want it to.
-    In particular, this function uses a custom template and allows to pass
-    parameters to a parametrized report.
-    Args:
-        input_file: path to input (Rmd) file
-        output_file: path to output (html) file
-        params: dictionary that will be passed to `params` arg of `rmarkdown::render`.
+    Run rmarkdown to create
+    Parameters
+    ----------
+    input_file
+    out_dir: output directory in that the markdown and resource files will be written.
+    params
+
+    Returns
+    -------
+
     """
     param_str = ""
     if params is not None:
@@ -37,25 +42,43 @@ def render_rmd(input_file, output_file, params=None):
         )
 
     # work around https://github.com/rstudio/rmarkdown/issues/1508
-    with NamedTemporaryFile(suffix=".Rmd") as tmp_input_file:
-        copyfile(input_file, tmp_input_file.name, follow_symlinks=True)
+    tmp_input_file = os.path.join(out_dir, os.path.basename(input_file))
+    copyfile(input_file, tmp_input_file, follow_symlinks=True)
 
-        rmd_cmd = (
-            "rmarkdown::render('{input_file}', "
-            "   output_file='{output_file}', "
-            "   output_format=rmdformats::material(self_contained=TRUE), "
-            #        "   output_format=bookdown::html_document2(), "
-            "   knit_root_dir='{work_dir}', "
-            "   params = list({params}))"
-        ).format(
-            input_file=os.path.abspath(tmp_input_file.name),
-            output_file=os.path.abspath(output_file),
-            params=param_str,
-            # required to set the workdir explicitly. Will work in the temp directory
-            # otherwise.
-            work_dir=os.getcwd(),
-        )
+    rmd_cmd = (
+        "rmarkdown::render('{input_file}', "
+        "   run_pandoc=FALSE, "
+        "   clean=FALSE, "
+        "   knit_root_dir='{work_dir}', "
+        "   params=list({params}))"
+    ).format(
+        input_file=os.path.abspath(tmp_input_file),
+        params=param_str,
+        # required to set the workdir explicitly. Will work in the temp directory
+        # otherwise.
+        work_dir=os.getcwd(),
+    )
 
-        cmd = ["Rscript", "--vanilla", "-e", rmd_cmd]
+    cmd = ["Rscript", "--vanilla", "-e", rmd_cmd]
+    check_call(cmd)
 
-        check_call(cmd)
+    p = re.compile("\.Rmd$")
+    md_file = p.sub(".utf8.md", tmp_input_file)
+
+    return md_file
+
+
+def render_rmd(input_file, output_file, params=None):
+    """
+    Wrapper function to render an Rmarkdown document the way I want it to.
+    In particular, this function uses a custom template and allows to pass
+    parameters to a parametrized report.
+    Args:
+        input_file: path to input (Rmd) file
+        output_file: path to output (html) file
+        params: dictionary that will be passed to `params` arg of `rmarkdown::render`.
+    """
+    with TemporaryDirectory() as tmp_dir:
+        md_file = _run_rmarkdown(input_file, tmp_dir, params)
+        run_pandoc(md_file, output_file, res_path="{}:{}".format(tmp_dir, RES_PATH))
+        print("test")
