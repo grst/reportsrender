@@ -94,3 +94,37 @@ def test_render_papermill(tmp_path):
     assert "ECHO_TRUE_02" in result
     assert "RESULTS_SHOW_01" in result
     assert "RESULTS_SHOW_02" in result
+
+
+def test_render_papermill_ipynb(tmp_path):
+    """The same should work for a ipynb input file"""
+    in_file = "notebooks/02_analyze_data.ipynb"
+    out_file = tmp_path / "report.html"
+    params = {"input_file": "notebooks/iris.tsv"}
+    render_papermill(in_file, out_file, params)
+
+    result = out_file.read_text()
+
+    assert "ECHO_FALSE" not in result
+    assert "RESULTS_HIDE" not in result
+    assert "ECHO_TRUE_01" in result
+    assert "ECHO_TRUE_02" in result
+    assert "RESULTS_SHOW_01" in result
+    assert "RESULTS_SHOW_02" in result
+
+
+def test_render_papermill_md(tmp_path):
+    """... and a markdown input file (jupytext format) """
+    in_file = "notebooks/02_analyze_data.md"
+    out_file = tmp_path / "report.html"
+    params = {"input_file": "notebooks/iris.tsv"}
+    render_papermill(in_file, out_file, params)
+
+    result = out_file.read_text()
+
+    assert "ECHO_FALSE" not in result
+    assert "RESULTS_HIDE" not in result
+    assert "ECHO_TRUE_01" in result
+    assert "ECHO_TRUE_02" in result
+    assert "RESULTS_SHOW_01" in result
+    assert "RESULTS_SHOW_02" in result

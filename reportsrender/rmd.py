@@ -1,5 +1,6 @@
-from subprocess import call
+from subprocess import check_call
 from shutil import copyfile
+from tempfile import NamedTemporaryFile
 import os
 
 
@@ -36,22 +37,25 @@ def render_rmd(input_file, output_file, params=None):
         )
 
     # work around https://github.com/rstudio/rmarkdown/issues/1508
-    tmp_input_file = input_file + ".copy.Rmd"
-    copyfile(input_file, tmp_input_file, follow_symlinks=True)
+    with NamedTemporaryFile(suffix=".Rmd") as tmp_input_file:
+        copyfile(input_file, tmp_input_file.name, follow_symlinks=True)
 
-    rmd_cmd = (
-        "rmarkdown::render('{input_file}', "
-        "   output_file='{output_file}', "
-        "   output_format=rmdformats::material(self_contained=TRUE), "
-        #        "   output_format=bookdown::html_document2(), "
-        # "   knit_root_dir='{root_dir}', "
-        "   params = list({params}))"
-    ).format(
-        input_file=os.path.abspath(tmp_input_file),
-        output_file=os.path.abspath(output_file),
-        params=param_str,
-    )
+        rmd_cmd = (
+            "rmarkdown::render('{input_file}', "
+            "   output_file='{output_file}', "
+            "   output_format=rmdformats::material(self_contained=TRUE), "
+            #        "   output_format=bookdown::html_document2(), "
+            "   knit_root_dir='{work_dir}', "
+            "   params = list({params}))"
+        ).format(
+            input_file=os.path.abspath(tmp_input_file.name),
+            output_file=os.path.abspath(output_file),
+            params=param_str,
+            # required to set the workdir explicitly. Will work in the temp directory
+            # otherwise.
+            work_dir=os.getcwd(),
+        )
 
-    cmd = ["Rscript", "--vanilla", "-e", rmd_cmd]
+        cmd = ["Rscript", "--vanilla", "-e", rmd_cmd]
 
-    call(cmd)
+        check_call(cmd)

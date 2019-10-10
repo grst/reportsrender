@@ -5,10 +5,10 @@ params:
 jupyter:
   jupytext:
     text_representation:
-      extension: .Rmd
-      format_name: rmarkdown
+      extension: .md
+      format_name: markdown
       format_version: '1.1'
-      jupytext_version: 1.2.3
+      jupytext_version: 1.2.4
   kernelspec:
     display_name: Python [conda env:.conda-vanderburg_oropharyngeal_cancer]
     language: python
@@ -19,11 +19,8 @@ jupyter:
 
 Load some packages, do some analysis, generate some plots...
 
-
-```{python}
+```python
 import pandas as pd
-import os
-print(os.getcwd())
 ```
 
 ## Get parameters from papermill/knitr
@@ -34,7 +31,7 @@ The following setup allows to run the parametrized report with both rmarkdown an
 * If that fails, we use the papermill notation to define default parameters.
 * the cell needs to be tagged with `parameters` (see metadata)
 
-```{python tags=c("parameters")}
+```python tags=["parameters"]
 # get default parameters. Either papermill or rmarkdown way.
 try:
     input_file = r.params["input_file"]
@@ -46,14 +43,14 @@ except:
 # Second section
 
 ## The following code block is shows both code and results.
-```{python}
+```python
 # TEST: ECHO_TRUE_01
 print("TEST: " + "_".join(("RESULTS", "SHOW", "01")))
 ```
 
 ## The following code block is hidden (code and results).
 Define a function to compute the fibonacci sequence.
-```{python, include=FALSE}
+```python hide_output=true
 # TEST: ECHO_FALSE
 print("TEST: " + "_".join(("RESULTS", "HIDE")))
 # define fibonacci function
@@ -78,7 +75,7 @@ print("Fibonacci number 42: " + str(fib(42)))
 ## The following code block is hidden (hide code, show results).
 
 Show the first 10 fibonacci numbers:
-```{python echo=FALSE}
+```python hide_input=true
 # TEST: ECHO_FALSE
 print("TEST: " + "_".join(("RESULTS", "SHOW", "02")))
 for i in range(10):
@@ -89,7 +86,7 @@ for i in range(10):
 
 
 ## The following code block suppresses the results:
-```{python results='hide'}
+```python results="'hide'"
 # TEST: ECHO_TRUE_02
 print("TEST: " + "_".join(("RESULTS", "HIDE")))
 for i in range(10):
@@ -103,7 +100,7 @@ for i in range(10):
 Every notebook should hava summary section that's understandable by biologists.
 Include the 'highlights' here and repeat the corresponding figures.
 
-```{python echo=FALSE}
+```python hide_input=true
 iris = pd.read_csv(input_file, sep="\t")
 print(iris)
 ```
