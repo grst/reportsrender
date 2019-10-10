@@ -36,11 +36,11 @@ def run_pandoc(
             --standalone \
             --section-divs \
             --table-of-contents \
-            --toc-depth 1 \
+            --toc-depth 2 \
             --template {html_template} \
             --css {css_file} \
             --resource-path {res_path} \
-            --highlight-style pygments \
+            --highlight-style pygments 
     """
     cmd2 = cmd.format(
         input_file=in_file,

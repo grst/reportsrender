@@ -10,7 +10,7 @@ Options:
   -h --help             Show this screen.
   --cpus=<cpus>         Number of CPUs to use for Numba/Numpy/OpenBLAS/MKL [default: 1]
   --params=<params>     space-separated list of key-value pairs that will be passed
-                        to papermill/Rmarkdown. 
+                        to papermill/Rmarkdown.
                         E.g. "input_file=dir/foo.txt output_file=dir2/bar.html"
 
 Possible engines are:
@@ -30,7 +30,11 @@ import sys
 
 def main():
     arguments = docopt(__doc__)
-    params = parse_params(arguments["--params"])
+    params = (
+        parse_params(arguments["--params"])
+        if arguments["--params"] is not None
+        else dict()
+    )
     set_cpus(arguments["--cpus"])
 
     if arguments["<engine>"] == "rmd":
