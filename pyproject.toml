@@ -7,9 +7,9 @@ module = 'reportsrender'
 author = 'Gregor Sturm'
 author-email = 'mail@gregor-sturm.de'
 home-page = 'https://github.com/grst/reportsrender'
-description-file = 'README'
+description-file = "README.md"
 classifiers = [
-    'License :: OSI Approved :: The MIT License',
+    'License :: OSI Approved :: MIT License',
     'Development Status :: 4 - Beta',
     'Intended Audience :: Developers',
     'Intended Audience :: Science/Research',
@@ -26,9 +26,11 @@ requires = [
     'ipykernel'
 ]
 
+[tool.flit.scripts]
+reportsrender = "reportsrender.cli:main"
+
 [tool.flit.metadata.requires-extra]
 test = [
     'pytest',
-    'pytest-faulthandler'
 ]
 
