@@ -18,18 +18,16 @@ install:
   - conda update -q conda
   # Useful for debugging any issues with conda
   - conda info -a
-  # Work around #1195
-  - sudo ln -s /home/travis/miniconda/bin/activate /usr/bin/activate
 
   # Replace dep1 dep2 ... with your dependencies
-  - conda create -q -c bioconda -c conda-forge -n reportsrender \
-      python=$TRAVIS_PYTHON_VERSION \
-      r-rmarkdown \
-      r-reticulate \
-      r-bookdown \
-      r-ggplot2 \
-      black \
-      flit \
+  - conda create -q -c bioconda -c conda-forge -n reportsrender
+      python=$TRAVIS_PYTHON_VERSION
+      r-rmarkdown
+      r-reticulate
+      r-bookdown
+      r-ggplot2
+      black
+      flit 
       pytest
 
   - conda activate reportsrender
