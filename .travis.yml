@@ -27,13 +27,14 @@ install:
       black
       flit
       pytest
+      pandoc
 
   - conda activate reportsrender
 
 script:
   - black --check reportsrender
   - pip install .
-  - python -m pytest tests
+  - cd tests && pytest
 
 
 
