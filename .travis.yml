@@ -1,5 +1,44 @@
-# https://www.mattlayman.com/blog/2018/python-code-black/
-# will fail the CI if not correctly formatted.
-black --check src_dir/
+language: c
+env:
+  - BUILD_TARGET=3.7
+
+install:
+  - sudo apt-get update
+  # We do this conditionally because it saves us some downloading if the
+  # version is the same.
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
+    else
+      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+    fi
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - source "$HOME/miniconda/etc/profile.d/conda.sh"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  # Useful for debugging any issues with conda
+  - conda info -a
+  # Work around #1195
+  - sudo ln -s /home/travis/miniconda/bin/activate /usr/bin/activate
+
+  # Replace dep1 dep2 ... with your dependencies
+  - conda create -q -c bioconda -c conda-forge -n reportsrender \
+      python=$TRAVIS_PYTHON_VERSION \
+      r-rmarkdown \
+      r-reticulate \
+      r-bookdown \
+      r-ggplot2 \
+      black \
+      flit \
+      pytest
+
+  - conda activate reportsrender
+
+script:
+  - black --check reportsrender
+  - pip install .
+  - python -m pytest tests
+
+
 
 
