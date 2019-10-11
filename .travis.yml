@@ -25,11 +25,10 @@ install:
       r-bookdown
       black
       flit
-      pytest
       pandoc
-      # required for testing the notebooks only
-      r-ggplot2
+      r-ggplot2 # --v-- this and the following deps are required for testing only.
       pandas
+      pytest
       r-dplyr
       r-readr
 
