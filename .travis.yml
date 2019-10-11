@@ -26,12 +26,12 @@ install:
       black
       flit
       pandoc
-      r-ggplot2 # --v-- this and the following deps are required for testing only.
+      `# required for testing only`
+      r-ggplot2
       pandas
       pytest
       r-dplyr
       r-readr
-
 
   - conda activate reportsrender
 
