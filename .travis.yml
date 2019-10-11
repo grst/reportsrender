@@ -1,6 +1,9 @@
 language: c
 env:
-  - BUILD_TARGET=3.7
+  - PYTHON_VER=3.6
+  - PYTHON_VER=3.7
+  - R_VER=3.5
+  - R_VER=3.6
 
 install:
   - sudo apt-get update
@@ -21,13 +24,14 @@ install:
 
   # Replace dep1 dep2 ... with your dependencies
   - conda create -q -c bioconda -c conda-forge -n reportsrender
-      python=$TRAVIS_PYTHON_VERSION
+      python=$PYTHON_VER
+      r-base=$R_VER
       r-rmarkdown
       r-reticulate
       r-bookdown
       r-ggplot2
       black
-      flit 
+      flit
       pytest
 
   - conda activate reportsrender
