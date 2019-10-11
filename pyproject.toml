@@ -23,7 +23,8 @@ requires = [
     'jupytext',
     'papermill',
     'nbconvert',
-    'ipykernel'
+    'ipykernel',
+    'get_version'
 ]
 
 [tool.flit.scripts]
