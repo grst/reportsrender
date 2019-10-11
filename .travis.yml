@@ -23,11 +23,16 @@ install:
       r-rmarkdown
       r-reticulate
       r-bookdown
-      r-ggplot2
       black
       flit
       pytest
       pandoc
+      # required for testing the notebooks only
+      r-ggplot2
+      pandas
+      r-dplyr
+      r-readr
+
 
   - conda activate reportsrender
 
