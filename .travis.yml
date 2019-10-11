@@ -27,6 +27,7 @@ install:
       black
       flit
       pytest
+      pandoc
 
   - conda activate reportsrender
 
