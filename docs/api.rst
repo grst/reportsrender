@@ -1,5 +1,7 @@
-API
-===
+Usage as Python library
+=======================
+
+Reportsrender provides a public API that can be used to execute and convert notebooks to HTML:
 
 .. module:: reportsrender
 

@@ -6,6 +6,7 @@ Welcome to reportsrender's documentation!
    :caption: Contents:
 
    introduction
+   features
    api
 
 
