@@ -10,6 +10,8 @@ Welcome to reportsrender's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   README
+
 
 
 Indices and tables
