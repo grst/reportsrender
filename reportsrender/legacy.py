@@ -1,5 +1,11 @@
+"""Old code that might be removed in future versions. """
+import nbformat
+from nbconvert import HTMLExporter
+from nbconvert.preprocessors import TagRemovePreprocessor
+
+
 def _convert_to_html_nbconvert(nb_path, out_file):
-    """convert executed ipynb file to html document. """
+    """convert executed ipynb file to html document using nbconvert. """
     with open(nb_path) as f:
         nb = nbformat.read(f, as_version=4)
 
