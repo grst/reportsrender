@@ -7,7 +7,7 @@ module = 'reportsrender'
 author = 'Gregor Sturm'
 author-email = 'mail@gregor-sturm.de'
 home-page = 'https://github.com/grst/reportsrender'
-description-file = "README.md"
+description-file = "README.rst"
 classifiers = [
     'License :: OSI Approved :: MIT License',
     'Development Status :: 4 - Beta',
