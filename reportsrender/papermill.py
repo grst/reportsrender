@@ -5,9 +5,10 @@ import jupytext as jtx
 from tempfile import NamedTemporaryFile
 from nbconvert.preprocessors import TagRemovePreprocessor
 from .pandoc import run_pandoc
+from nbformat import NotebookNode
 
 
-def _prepare_cell_tags(nb):
+def _prepare_cell_tags(nb: NotebookNode):
     """Transfer jupytext metadata (hide_input etc.)
     to consistent `tags` metadata, that can be
     handled by a nbconvert `TagRemovePreprocessor`.
@@ -15,8 +16,10 @@ def _prepare_cell_tags(nb):
     This is temporary until there is a consistent solution
     for mwouts/jupytext#337
 
-    Args:
-        nb: jupyter notebook read into dict using `nbformat.read`
+    Parameters
+    ----------
+        nb
+            jupyter notebook read into dict using `nbformat.read`
     """
 
     def _fix_metadata(cell):
@@ -35,16 +38,21 @@ def _prepare_cell_tags(nb):
         _fix_metadata(cell)
 
 
-def _remove_cells(nb):
+def _remove_cells(nb: NotebookNode):
     """Remove inputs, outputs or both, depending on the cell-tags.
+
+    Relies on a TagRemovePreprocessor from nbconvert.
 
     Parameters
     ----------
     nb
+        Input notebook.
+
 
     Returns
     -------
-    nb
+    nb: NotebookNode
+        NotebookNode with cells removed.
 
     """
     tag_remove_preprocessor = TagRemovePreprocessor(
@@ -65,9 +73,13 @@ def _remove_cells(nb):
     return nb
 
 
-def _run_papermill(nb_path, out_file, params):
+def _run_papermill(nb_path: str, out_file: str, params: dict):
     """execute .ipynb file using papermill and write
     results to out_file in ipynb format.
+
+    See Also
+    --------
+    papermill.execute_notebook : Execute a notebook using papermill.
     """
     # excplicitly specify the Python 3 kernel to override the notebook-metadata.
     pm.execute_notebook(
@@ -75,15 +87,20 @@ def _run_papermill(nb_path, out_file, params):
     )
 
 
-def render_papermill(input_file, output_file, params=None):
+def render_papermill(input_file: str, output_file: str, params: dict = None):
     """
     Wrapper function to render a jupytext/jupyter notebook
-    with papermill and nbconvert.
+    with papermill and pandoc.
 
-    Args:
-        input_file: path to input (.py/.Rmd/.md/.../.ipynb) file
-        output_file: path to output (html) file.
-        params: dictionary that will be passed to papermill.
+    Parameters
+    ----------
+        input_file
+            path to input file. Can be any format supported by jupytext.
+        output_file
+            path to output (html) file.
+        params
+            parameter dictionary that will be passed to papermill.
+            See https://papermill.readthedocs.io/en/latest/usage-parameterize.html for more details.
     """
 
     with NamedTemporaryFile(suffix=".ipynb") as tmp_nb_converted:

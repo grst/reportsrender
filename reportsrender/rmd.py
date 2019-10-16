@@ -7,7 +7,15 @@ import re
 
 
 def _literal_to_r_str(value):
-    """Convert a python value to a corresponding R string"""
+    """Convert a python value to a corresponding R string.
+
+    >>> _literal_to_r_str(True)
+    "TRUE"
+    >>> _literal_to_r_str(6)
+    "8"
+    >>> _literal_to_r_str("test")
+    "'test'"
+    """
     _literal_to_str = {True: "TRUE", False: "FALSE", None: "NULL"}
     try:
         return _literal_to_str[value]
@@ -19,17 +27,28 @@ def _literal_to_r_str(value):
             return str(value)
 
 
-def _run_rmarkdown(input_file, out_dir, params=None):
+def _run_rmarkdown(input_file: str, out_dir: str, params: dict = None):
     """
-    Run rmarkdown to create
+    Run rmarkdown to execute a `.Rmd` file.
+
+    Will not execute pandoc but write a markdown file and associated resources
+    to the output directory.
+
     Parameters
     ----------
     input_file
-    out_dir: output directory in that the markdown and resource files will be written.
+        input (Rmarkdown) file.
+    out_dir
+        output directory in that the markdown and resource files will be written.
     params
+        Parameter dictionary passed to rmarkdown.
+        See https://bookdown.org/yihui/rmarkdown/parameterized-reports.html for more details.
 
     Returns
     -------
+    md_file: str
+        Path to output-markdown file. Will be absolute path if `out_dir` is absolute and
+        relative if `out_dir` is relative.
 
     """
     param_str = ""
@@ -68,15 +87,21 @@ def _run_rmarkdown(input_file, out_dir, params=None):
     return md_file
 
 
-def render_rmd(input_file, output_file, params=None):
+def render_rmd(input_file: str, output_file: str, params: dict = None):
     """
-    Wrapper function to render an Rmarkdown document the way I want it to.
-    In particular, this function uses a custom template and allows to pass
-    parameters to a parametrized report.
-    Args:
-        input_file: path to input (Rmd) file
-        output_file: path to output (html) file
-        params: dictionary that will be passed to `params` arg of `rmarkdown::render`.
+    Wrapper function to render an Rmarkdown document with
+    the R `rmarkdown` package and convert it to HTML using pandoc
+    and a custom template.
+
+    Parameters
+    ----------
+        input_file
+            path to input (Rmd) file
+        output_file
+            path to output (html) file
+        params
+            Dictionary that will be passed to `params` arg of `rmarkdown::render`.
+            See https://bookdown.org/yihui/rmarkdown/parameterized-reports.html for more details.
     """
     with TemporaryDirectory() as tmp_dir:
         md_file = _run_rmarkdown(input_file, tmp_dir, params)

@@ -3,7 +3,6 @@
 import pkg_resources
 import os
 from subprocess import check_call
-from typing import Collection
 
 
 RES_PATH = pkg_resources.resource_filename(__package__, "templates/adaptive-bootstrap")
@@ -30,13 +29,13 @@ def run_pandoc(
         the file extension.
     out_file
         path to output (html) file.
-    res_path: optional
+    res_path
         pandoc resource path (pandoc will look here for asset files). Per default, the resource path points to
         the `adaptive-bootstrap` template directory shipped with this package.
-    template_file: optional
+    template_file
         path to the pandoc template. Per default, the `adaptive-bootstrap` template
         shipped with this package will be used.
-    css_file: optional
+    css_file
         path to the css file used by pandoc. Per default, the css file from the `adaptive-bootstrap` template
         shipped with this package will be used.
     """
