@@ -22,7 +22,7 @@ Possible engines are:
 """
 
 from docopt import docopt
-from .util import set_cpus, parse_params
+from .util import _set_cpus, _parse_params
 from .papermill import render_papermill
 from .rmd import render_rmd
 import sys
@@ -31,11 +31,11 @@ import sys
 def main():
     arguments = docopt(__doc__)
     params = (
-        parse_params(arguments["--params"])
+        _parse_params(arguments["--params"])
         if arguments["--params"] is not None
         else dict()
     )
-    set_cpus(arguments["--cpus"])
+    _set_cpus(arguments["--cpus"])
 
     if arguments["<engine>"] == "rmd":
         render_rmd(arguments["<notebook>"], arguments["<out_file>"], params)

@@ -1,4 +1,4 @@
-def convert_to_html_nbconvert(nb_path, out_file):
+def _convert_to_html_nbconvert(nb_path, out_file):
     """convert executed ipynb file to html document. """
     with open(nb_path) as f:
         nb = nbformat.read(f, as_version=4)

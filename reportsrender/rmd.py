@@ -81,4 +81,3 @@ def render_rmd(input_file, output_file, params=None):
     with TemporaryDirectory() as tmp_dir:
         md_file = _run_rmarkdown(input_file, tmp_dir, params)
         run_pandoc(md_file, output_file, res_path="{}:{}".format(tmp_dir, RES_PATH))
-        print("test")
