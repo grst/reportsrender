@@ -5,18 +5,22 @@ from datetime import datetime
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parent))
 
-import reportsrender
+from reportsrender import __author__, __version__
 
 # General information
 project = "reportsrender"
-author = reportsrender.__author__
+author = __author__
 copyright = f"{datetime.now():%Y}, {author}."
-version = reportsrender.__version__
+version = __version__
 
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 nitpicky = True  # Warn about broken links
-nitpick_ignore = [("py:data", "typing.Optional"), ("py:class", "str")]
+nitpick_ignore = [
+    ("py:data", "typing.Optional"),
+    ("py:class", "str"),
+    ("py:class", "dict"),
+]
 needs_sphinx = "2.0"  # Nicer param docs
 
 
