@@ -86,14 +86,13 @@ and install the package:
 
 ::
 
-    conda create -c bioconda -c conda-forge -n reportsrender
-          python=$PYTHON_VER
-          r-base=$R_VER
-          r-rmarkdown
-          r-reticulate
-          r-bookdown
-          black
-          flit
+    conda create -c bioconda -c conda-forge -n reportsrender \
+          "python>=3.6" \
+          "r-base>=3.5" \
+          r-rmarkdown \
+          r-reticulate \
+          r-bookdown \
+          flit \
           pandoc
 
     conda activate reportsrender
