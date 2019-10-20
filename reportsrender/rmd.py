@@ -2,6 +2,7 @@ from subprocess import check_call
 from shutil import copyfile
 from tempfile import NamedTemporaryFile, TemporaryDirectory
 from .pandoc import run_pandoc, RES_PATH
+import jupytext as jtx
 import os
 import re
 
@@ -104,5 +105,10 @@ def render_rmd(input_file: str, output_file: str, params: dict = None):
             See https://bookdown.org/yihui/rmarkdown/parameterized-reports.html for more details.
     """
     with TemporaryDirectory() as tmp_dir:
-        md_file = _run_rmarkdown(input_file, tmp_dir, params)
-        run_pandoc(md_file, output_file, res_path="{}:{}".format(tmp_dir, RES_PATH))
+        with NamedTemporaryFile(suffix=".Rmd") as tmp_nb_converted:
+            if not input_file.endswith(".Rmd"):
+                nb = jtx.read(input_file)
+                jtx.write(nb, tmp_nb_converted.name)
+                input_file = tmp_nb_converted.name
+            md_file = _run_rmarkdown(input_file, tmp_dir, params)
+            run_pandoc(md_file, output_file, res_path="{}:{}".format(tmp_dir, RES_PATH))

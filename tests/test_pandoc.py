@@ -9,3 +9,10 @@ def test_run_pandoc(tmp_path):
 
     assert "Export data" in res_html.read_text()
     assert "Export data" in res_md.read_text()
+    assert (
+        '<div id="TOC"' in res_md.read_text()
+    ), "table of contents exists when starting from markdown. "
+    # TODO: will be fixed in next pandoc version
+    # assert (
+    #     '<div id="TOC"' in res_html.read_text()
+    # ), "table of contents exists when starting from ipynb. "

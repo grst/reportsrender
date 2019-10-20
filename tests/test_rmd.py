@@ -18,6 +18,13 @@ def test_render_rmd(tmp_path):
     render_rmd(in_file, out_file, dict())
 
 
+def test_render_rmd_ipynb(tmp_path):
+    in_file = "notebooks/01_generate_data.ipynb"
+    out_file = tmp_path / "report.html"
+    # params = {"input_file": "notebooks/iris.tsv"}
+    render_rmd(in_file, out_file, dict())
+
+
 def test_render_rmd_py(tmp_path):
     """Render a notebook that contains python code with
     reticulate. """
