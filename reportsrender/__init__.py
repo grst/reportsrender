@@ -1,5 +1,6 @@
 """Execute and Render notebooks as HTML reports. """
 from get_version import get_version
+import inspect
 
 __version__ = get_version(__file__)
 del get_version
@@ -7,6 +8,9 @@ del get_version
 __author__ = "Gregor Sturm"
 
 
-from .papermill import render_papermill
-from .rmd import render_rmd
-from .pandoc import run_pandoc
+# To avoid that all dependencies need to be installed at build
+# time:
+if not inspect.stack()[-1][1].endswith("flit"):
+    from .papermill import render_papermill
+    from .rmd import render_rmd
+    from .pandoc import run_pandoc
