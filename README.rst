@@ -51,9 +51,9 @@ Usage from command line
     reportsrender
 
     Execute and render a jupyter/Rmarkdown notebook.
-
+    
     Usage:
-      reportsrender <engine> <notebook> <out_file> [options]
+      reportsrender <notebook> <out_file> [options]
       reportsrender --help
 
     Options:
@@ -62,12 +62,15 @@ Usage from command line
       --params=<params>     space-separated list of key-value pairs that will be passed
                             to papermill/Rmarkdown.
                             E.g. "input_file=dir/foo.txt output_file=dir2/bar.html"
+      --engine=<engine>     Engine to execute the notebook. [default: auto]
 
     Possible engines are:
+        auto            Use `rmd` engine for `*.Rmd` files, papermill otherwise.
         rmd             Use `rmarkdown` to execute the notebook. Supports R and
                         python (through reticulate)
         papermill       User `papermill` to execute the notebook. Works for every
                         kernel available in the jupyter installation.
+
 
 
 
