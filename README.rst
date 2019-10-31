@@ -1,6 +1,6 @@
 Generate reproducible reports from Rmarkdown or jupyter notebooks
 =================================================================
-|travis| |docs|
+|travis| |docs| |black|
 
 .. |travis| image:: https://travis-ci.com/grst/reportsrender.svg?branch=master
     :target: https://travis-ci.com/grst/reportsrender
@@ -9,6 +9,10 @@ Generate reproducible reports from Rmarkdown or jupyter notebooks
 .. |docs| image:: https://readthedocs.org/projects/reportsrender/badge/?version=latest
     :target: https://reportsrender.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
+    
+.. |black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/psf/black
+    :alt: The uncompromising python formatter
 
 Reportsrender allows to create reproducible, consistently looking HTML reports from
 both jupyter notebooks and Rmarkdown files. It makes use of `papermill <https://github.com/nteract/papermill>`_
