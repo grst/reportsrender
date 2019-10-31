@@ -3,7 +3,7 @@
 Execute and render a jupyter/Rmarkdown notebook.
 
 Usage:
-  reportsrender <engine> <notebook> <out_file> [options]
+  reportsrender <notebook> <out_file> [options]
   reportsrender --help
 
 Options:
@@ -12,8 +12,10 @@ Options:
   --params=<params>     space-separated list of key-value pairs that will be passed
                         to papermill/Rmarkdown.
                         E.g. "input_file=dir/foo.txt output_file=dir2/bar.html"
+  --engine=<engine>     Engine to execute the notebook. [default: auto]
 
 Possible engines are:
+    auto            Use `rmd` engine for `*.Rmd` files, papermill otherwise.
     rmd             Use `rmarkdown` to execute the notebook. Supports R and
                     python (through reticulate)
     papermill       User `papermill` to execute the notebook. Works for every
@@ -37,9 +39,13 @@ def main():
     )
     _set_cpus(arguments["--cpus"])
 
-    if arguments["<engine>"] == "rmd":
+    engine = arguments["--engine"]
+    if engine == "auto":
+        engine = "rmd" if arguments["<notebook>"].endswith(".Rmd") else "papermill"
+
+    if engine == "rmd":
         render_rmd(arguments["<notebook>"], arguments["<out_file>"], params)
-    elif arguments["<engine>"] == "papermill":
+    elif engine == "papermill":
         render_papermill(arguments["<notebook>"], arguments["<out_file>"], params)
     else:
         print(
