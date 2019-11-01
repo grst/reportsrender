@@ -33,6 +33,8 @@ reportsrender = "reportsrender.cli:main"
 [tool.flit.metadata.requires-extra]
 test = [
     'pytest',
+    # required for the test notebooks as a lot can go wrong during plotting and figure handling.
+    'matplotlib'
 ]
 doc = [
     'sphinx',

@@ -27,6 +27,7 @@ install:
       flit
       pandoc
       `# required for testing only`
+      matplotlib
       r-ggplot2
       pandas
       pytest

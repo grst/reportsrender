@@ -19,8 +19,12 @@ jupyter:
 
 Load some packages, do some analysis, generate some plots...
 
+
 ```python
 import pandas as pd
+import matplotlib.pyplot as plt
+import os
+print(os.getcwd())
 ```
 
 ## Get parameters from papermill/knitr
@@ -81,7 +85,7 @@ print("TEST: " + "_".join(("RESULTS", "SHOW", "02")))
 for i in range(10):
     print("The {i}th Fibonacci number is {f}".format(i=i, f=fib(i)))
 
-# plt.plot(range(10), [fib(x) for x in range(10)])
+plt.plot(range(10), [fib(x) for x in range(10)])
 ```
 
 
@@ -92,7 +96,7 @@ print("TEST: " + "_".join(("RESULTS", "HIDE")))
 for i in range(10):
     print("The {i}th Fibonacci number is {f}".format(i=i, f=fib(i)))
 
-# plt.plot(range(10), [fib(x) for x in range(10)])
+plt.plot(range(10), [fib(x) for x in range(10)])
 ```
 
 
