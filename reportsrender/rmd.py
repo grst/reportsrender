@@ -48,8 +48,8 @@ def _run_rmarkdown(input_file: str, out_dir: str, params: dict = None):
     Returns
     -------
     md_file: str
-        Path to output-markdown file. Will be absolute path if `out_dir` is absolute and
-        relative if `out_dir` is relative.
+        Path to output-markdown file. Will be contained in the `out_dir` folder.
+        Path will be absolute path if `out_dir` is absolute and relative if `out_dir` is relative.
 
     """
     param_str = ""
@@ -109,6 +109,7 @@ def render_rmd(input_file: str, output_file: str, params: dict = None):
             if not input_file.endswith(".Rmd"):
                 nb = jtx.read(input_file)
                 jtx.write(nb, tmp_nb_converted.name)
-                input_file = tmp_nb_converted.name
-            md_file = _run_rmarkdown(input_file, tmp_dir, params)
+            else:
+                copyfile(input_file, tmp_nb_converted.name)
+            md_file = _run_rmarkdown(tmp_nb_converted.name, tmp_dir, params)
             run_pandoc(md_file, output_file, res_path="{}:{}".format(tmp_dir, RES_PATH))
