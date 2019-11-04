@@ -2,9 +2,11 @@ from subprocess import check_call
 from shutil import copyfile
 from tempfile import NamedTemporaryFile, TemporaryDirectory
 from .pandoc import run_pandoc, RES_PATH
+from .util import mergefolders
 import jupytext as jtx
 import os
 import re
+import shutil
 
 
 def _literal_to_r_str(value):
@@ -65,6 +67,8 @@ def _run_rmarkdown(input_file: str, out_dir: str, params: dict = None):
     tmp_input_file = os.path.join(out_dir, os.path.basename(input_file))
     copyfile(input_file, tmp_input_file, follow_symlinks=True)
 
+    work_dir = os.getcwd()
+
     rmd_cmd = (
         "rmarkdown::render('{input_file}', "
         "   run_pandoc=FALSE, "
@@ -76,7 +80,7 @@ def _run_rmarkdown(input_file: str, out_dir: str, params: dict = None):
         params=param_str,
         # required to set the workdir explicitly. Will work in the temp directory
         # otherwise.
-        work_dir=os.getcwd(),
+        work_dir=work_dir,
     )
 
     cmd = ["Rscript", "--vanilla", "-e", rmd_cmd]
@@ -84,6 +88,15 @@ def _run_rmarkdown(input_file: str, out_dir: str, params: dict = None):
 
     p = re.compile("\.Rmd$")
     md_file = p.sub(".utf8.md", tmp_input_file)
+
+    # Workaround for https://github.com/rstudio/rmarkdown/issues/1686
+    # merge `_files` directory from work_dir into out_dir
+    res_folder_name = p.sub("_files", os.path.basename(tmp_input_file))
+    res_work_dir = os.path.join(work_dir, res_folder_name)
+    res_file_dir = os.path.join(os.path.dirname(tmp_input_file), res_folder_name)
+    if os.path.isdir(res_work_dir):
+        mergefolders(res_work_dir, res_file_dir)
+        shutil.rmtree(res_work_dir)
 
     return md_file
 
