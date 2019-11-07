@@ -3,17 +3,20 @@
 import pkg_resources
 import os
 from subprocess import check_call
+from typing import Collection
 
 
-RES_PATH = pkg_resources.resource_filename(__package__, "templates/adaptive-bootstrap")
-DEFAULT_TEMPLATE = os.path.join(RES_PATH, "standalone.html")
-DEFAULT_CSS = os.path.join(RES_PATH, "template.css")
+DEFAULT_RES_PATH = pkg_resources.resource_filename(
+    __package__, "templates/adaptive-bootstrap"
+)
+DEFAULT_TEMPLATE = os.path.join(DEFAULT_RES_PATH, "standalone.html")
+DEFAULT_CSS = os.path.join(DEFAULT_RES_PATH, "template.css")
 
 
 def run_pandoc(
     in_file: str,
     out_file: str,
-    res_path: str = None,
+    res_path: Collection[str] = None,
     template_file: str = None,
     css_file: str = None,
 ):
@@ -30,8 +33,8 @@ def run_pandoc(
     out_file
         path to output (html) file.
     res_path
-        pandoc resource path (pandoc will look here for asset files). Per default, the resource path points to
-        the `adaptive-bootstrap` template directory shipped with this package.
+        List of pandoc resource paths (pandoc will look here for asset files). If no template_file is provided
+        the resource path of the default template will be appended.
     template_file
         path to the pandoc template. Per default, the `adaptive-bootstrap` template
         shipped with this package will be used.
@@ -40,9 +43,10 @@ def run_pandoc(
         shipped with this package will be used.
     """
     if res_path is None:
-        res_path = RES_PATH
+        res_path = list()
     if template_file is None:
         template_file = DEFAULT_TEMPLATE
+        res_path.append(DEFAULT_RES_PATH)
     if css_file is None:
         css_file = DEFAULT_CSS
 
@@ -66,7 +70,7 @@ def run_pandoc(
             --toc-depth 2 \
             --template {html_template} \
             --css {css_file} \
-            --resource-path {res_path} \
+            --resource-path "{res_path}" \
             --highlight-style pygments 
     """
     cmd2 = cmd.format(
@@ -74,6 +78,6 @@ def run_pandoc(
         output_file=out_file,
         html_template=template_file,
         css_file=css_file,
-        res_path=res_path,
+        res_path=":".join(res_path),
     )
     check_call(cmd2, shell=True)

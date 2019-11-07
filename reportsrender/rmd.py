@@ -1,7 +1,7 @@
 from subprocess import check_call
 from shutil import copyfile
 from tempfile import NamedTemporaryFile, TemporaryDirectory
-from .pandoc import run_pandoc, RES_PATH
+from .pandoc import run_pandoc
 from .util import mergefolders
 import jupytext as jtx
 import os
@@ -117,6 +117,9 @@ def render_rmd(input_file: str, output_file: str, params: dict = None):
             Dictionary that will be passed to `params` arg of `rmarkdown::render`.
             See https://bookdown.org/yihui/rmarkdown/parameterized-reports.html for more details.
     """
+    # Directory the notebook is located in. Will be used as additional resource path for pandoc.
+    nb_dir = os.path.abspath(os.path.dirname(input_file))
+
     with TemporaryDirectory() as tmp_dir:
         with NamedTemporaryFile(suffix=".Rmd") as tmp_nb_converted:
             if not input_file.endswith(".Rmd"):
@@ -125,4 +128,4 @@ def render_rmd(input_file: str, output_file: str, params: dict = None):
             else:
                 copyfile(input_file, tmp_nb_converted.name)
             md_file = _run_rmarkdown(tmp_nb_converted.name, tmp_dir, params)
-            run_pandoc(md_file, output_file, res_path="{}:{}".format(tmp_dir, RES_PATH))
+            run_pandoc(md_file, output_file, res_path=[nb_dir, tmp_dir])

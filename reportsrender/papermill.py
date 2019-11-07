@@ -6,6 +6,7 @@ from tempfile import NamedTemporaryFile
 from nbconvert.preprocessors import TagRemovePreprocessor
 from .pandoc import run_pandoc
 from nbformat import NotebookNode
+import os
 
 
 def _prepare_cell_tags(nb: NotebookNode):
@@ -103,6 +104,9 @@ def render_papermill(input_file: str, output_file: str, params: dict = None):
             See https://papermill.readthedocs.io/en/latest/usage-parameterize.html for more details.
     """
 
+    # Directory the notebook is located in. Will be used as additional resource path for pandoc.
+    nb_dir = os.path.abspath(os.path.dirname(input_file))
+
     with NamedTemporaryFile(suffix=".ipynb") as tmp_nb_converted:
         with NamedTemporaryFile(suffix=".ipynb") as tmp_nb_executed:
             with NamedTemporaryFile(suffix=".ipynb") as tmp_nb_cleaned:
@@ -119,4 +123,4 @@ def render_papermill(input_file: str, output_file: str, params: dict = None):
                 _remove_cells(nb_exec)
                 jtx.write(nb_exec, tmp_nb_cleaned.name)
                 # convert to html
-                run_pandoc(tmp_nb_cleaned.name, output_file)
+                run_pandoc(tmp_nb_cleaned.name, output_file, res_path=[nb_dir])

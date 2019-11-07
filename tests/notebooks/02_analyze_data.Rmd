@@ -108,3 +108,7 @@ Include the 'highlights' here and repeat the corresponding figures.
 iris = pd.read_csv(input_file, sep="\t")
 print(iris)
 ```
+
+... And here is a cat skull included from the resource dir. Pandoc should include it in the HTML
+
+![cat skull](resource_dir/cat_skull.jpg)
