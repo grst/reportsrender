@@ -119,7 +119,7 @@ def render_papermill(input_file: str, output_file: str, params: dict = None):
                 )
                 # hide inputs, outputs etc.
                 nb_exec = jtx.read(tmp_nb_executed.name)
-                _prepare_cell_tags(nb_exec)
+                # _prepare_cell_tags(nb_exec)
                 _remove_cells(nb_exec)
                 jtx.write(nb_exec, tmp_nb_cleaned.name)
                 # convert to html
