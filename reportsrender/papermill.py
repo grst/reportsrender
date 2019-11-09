@@ -9,36 +9,6 @@ from nbformat import NotebookNode
 import os
 
 
-def _prepare_cell_tags(nb: NotebookNode):
-    """Transfer jupytext metadata (hide_input etc.)
-    to consistent `tags` metadata, that can be
-    handled by a nbconvert `TagRemovePreprocessor`.
-
-    This is temporary until there is a consistent solution
-    for mwouts/jupytext#337
-
-    Parameters
-    ----------
-        nb
-            jupyter notebook read into dict using `nbformat.read`
-    """
-
-    def _fix_metadata(cell):
-        m = cell["metadata"]
-        tags = m.get("tags", list())
-        if "hide_input" in m and m["hide_input"]:
-            tags.append("hide_input")
-        if "hide_output" in m and m["hide_output"]:
-            # jupytext converts rmarkdown `include=FALSE` incorrectly.
-            tags.append("remove_cell")
-        if "results" in m and m["results"].strip("'" + '"') == "hide":
-            tags.append("hide_output")
-        m["tags"] = list(set(tags))
-
-    for cell in nb["cells"]:
-        _fix_metadata(cell)
-
-
 def _remove_cells(nb: NotebookNode):
     """Remove inputs, outputs or both, depending on the cell-tags.
 
@@ -119,7 +89,6 @@ def render_papermill(input_file: str, output_file: str, params: dict = None):
                 )
                 # hide inputs, outputs etc.
                 nb_exec = jtx.read(tmp_nb_executed.name)
-                # _prepare_cell_tags(nb_exec)
                 _remove_cells(nb_exec)
                 jtx.write(nb_exec, tmp_nb_cleaned.name)
                 # convert to html

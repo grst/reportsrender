@@ -7,8 +7,8 @@ jupyter:
     text_representation:
       extension: .md
       format_name: markdown
-      format_version: '1.1'
-      jupytext_version: 1.2.4
+      format_version: '1.2'
+      jupytext_version: 1.3.0rc1+dev
   kernelspec:
     display_name: Python [conda env:.conda-vanderburg_oropharyngeal_cancer]
     language: python
@@ -54,7 +54,7 @@ print("TEST: " + "_".join(("RESULTS", "SHOW", "01")))
 
 ## The following code block is hidden (code and results).
 Define a function to compute the fibonacci sequence.
-```python hide_output=true
+```python tags=["remove_cell"]
 # TEST: ECHO_FALSE
 print("TEST: " + "_".join(("RESULTS", "HIDE")))
 # define fibonacci function
@@ -79,7 +79,7 @@ print("Fibonacci number 42: " + str(fib(42)))
 ## The following code block is hidden (hide code, show results).
 
 Show the first 10 fibonacci numbers:
-```python hide_input=true
+```python tags=["remove_input"]
 # TEST: ECHO_FALSE
 print("TEST: " + "_".join(("RESULTS", "SHOW", "02")))
 for i in range(10):
@@ -90,7 +90,7 @@ plt.plot(range(10), [fib(x) for x in range(10)])
 
 
 ## The following code block suppresses the results:
-```python results="'hide'"
+```python tags=["remove_output"]
 # TEST: ECHO_TRUE_02
 print("TEST: " + "_".join(("RESULTS", "HIDE")))
 for i in range(10):
@@ -104,7 +104,7 @@ plt.plot(range(10), [fib(x) for x in range(10)])
 Every notebook should hava summary section that's understandable by biologists.
 Include the 'highlights' here and repeat the corresponding figures.
 
-```python hide_input=true
+```python tags=["remove_input"]
 iris = pd.read_csv(input_file, sep="\t")
 print(iris)
 ```

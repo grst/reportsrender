@@ -4,9 +4,10 @@ Test the pipeline results:
   * does hiding inputs and outputs work as expected?
 """
 
-from reportsrender.papermill import render_papermill, _remove_cells, _prepare_cell_tags
+from reportsrender.papermill import render_papermill, _remove_cells
 import nbformat
 from pprint import pprint
+from reportsrender.index import _get_title
 
 
 def test_remove_cells():
@@ -14,11 +15,6 @@ def test_remove_cells():
     nb = nbformat.from_dict(
         {
             "cells": [
-                {
-                    "cell_type": "markdown",
-                    "metadata": {"hide_input": True},
-                    "source": "# REMOVE_CELL",
-                },
                 {
                     "cell_type": "markdown",
                     "metadata": {"tags": ["hide_input"]},
@@ -65,7 +61,6 @@ def test_remove_cells():
         }
     )
 
-    _prepare_cell_tags(nb)
     nb2 = _remove_cells(nb)
 
     assert nb2 == nb
