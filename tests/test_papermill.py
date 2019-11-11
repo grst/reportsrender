@@ -123,3 +123,27 @@ def test_render_papermill_md(tmp_path):
     assert "ECHO_TRUE_02" in result
     assert "RESULTS_SHOW_01" in result
     assert "RESULTS_SHOW_02" in result
+
+
+def test_render_papermill_title(tmpdir):
+    rmd_papermill = tmpdir.join("papermill.Rmd")
+    html_papermill = tmpdir.join("papermill.html")
+
+    rmd_papermill.write(
+        "\n".join(
+            [
+                "---",
+                "title: A Novel Approach to Finding Black Cats in Dark Rooms (Papermill)",
+                "---",
+                "",
+                "Lorem ipsum dolor sit amet. ",
+            ]
+        )
+    )
+
+    render_papermill(str(rmd_papermill), str(html_papermill))
+
+    assert (
+        _get_title(str(html_papermill))
+        == "A Novel Approach to Finding Black Cats in Dark Rooms (Papermill)"
+    )

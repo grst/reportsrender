@@ -24,7 +24,8 @@ requires = [
     'papermill',
     'nbconvert',
     'ipykernel',
-    'get_version'
+    'get_version',
+    'lxml'
 ]
 
 [tool.flit.scripts]

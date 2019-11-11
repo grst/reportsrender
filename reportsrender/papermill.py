@@ -65,13 +65,13 @@ def render_papermill(input_file: str, output_file: str, params: dict = None):
 
     Parameters
     ----------
-        input_file
-            path to input file. Can be any format supported by jupytext.
-        output_file
-            path to output (html) file.
-        params
-            parameter dictionary that will be passed to papermill.
-            See https://papermill.readthedocs.io/en/latest/usage-parameterize.html for more details.
+    input_file
+        path to input file. Can be any format supported by jupytext.
+    output_file
+        path to output (html) file.
+    params
+        parameter dictionary that will be passed to papermill.
+        See https://papermill.readthedocs.io/en/latest/usage-parameterize.html for more details.
     """
 
     # Directory the notebook is located in. Will be used as additional resource path for pandoc.

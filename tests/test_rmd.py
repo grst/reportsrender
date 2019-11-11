@@ -1,4 +1,5 @@
 from reportsrender.rmd import render_rmd, _run_rmarkdown
+from reportsrender.index import _get_title
 
 
 def test_run_rmarkdown(tmp_path):
@@ -42,3 +43,27 @@ def test_render_rmd_py(tmp_path):
     assert "ECHO_TRUE_02" in result
     assert "RESULTS_SHOW_01" in result
     assert "RESULTS_SHOW_02" in result
+
+
+def test_render_rmd_title(tmpdir):
+    rmd_rmd = tmpdir.join("rmd.Rmd")
+    html_rmd = tmpdir.join("rmd.html")
+
+    rmd_rmd.write(
+        "\n".join(
+            [
+                "---",
+                "title: A Novel Approach to Finding Black Cats in Dark Rooms (Rmd)",
+                "---",
+                "",
+                "Lorem ipsum dolor sit amet. ",
+            ]
+        )
+    )
+
+    render_rmd(str(rmd_rmd), str(html_rmd))
+
+    assert (
+        _get_title(str(html_rmd))
+        == "A Novel Approach to Finding Black Cats in Dark Rooms (Rmd)"
+    )
