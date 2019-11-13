@@ -86,8 +86,12 @@ def _run_rmarkdown(input_file: str, out_dir: str, params: dict = None):
     cmd = ["Rscript", "--vanilla", "-e", rmd_cmd]
     check_call(cmd)
 
+    # we want the final file to end with `.md` and not `.utf8.md`
+    # as pandoc uses the filename as document title.
     p = re.compile("\.Rmd$")
-    md_file = p.sub(".utf8.md", tmp_input_file)
+    md_file_utf8 = p.sub(".utf8.md", tmp_input_file)
+    md_file = p.sub(".md", tmp_input_file)
+    shutil.move(os.path.abspath(md_file_utf8), os.path.abspath(md_file))
 
     # Workaround for https://github.com/rstudio/rmarkdown/issues/1686
     # merge `_files` directory from work_dir into out_dir
@@ -121,11 +125,20 @@ def render_rmd(input_file: str, output_file: str, params: dict = None):
     nb_dir = os.path.abspath(os.path.dirname(input_file))
 
     with TemporaryDirectory() as tmp_dir:
-        with NamedTemporaryFile(suffix=".Rmd") as tmp_nb_converted:
+        with TemporaryDirectory() as tmp_dir_nb_converted:
+            # Create this file manually with given name
+            # so that pandoc gracefully falls back to the
+            # file name if no title is specified within the file. (#17)
+            tmp_nb_converted = os.path.join(
+                tmp_dir_nb_converted,
+                os.path.splitext(os.path.basename(input_file))[0] + ".Rmd",
+            )
+
             if not input_file.endswith(".Rmd"):
                 nb = jtx.read(input_file)
-                jtx.write(nb, tmp_nb_converted.name)
+                jtx.write(nb, tmp_nb_converted)
             else:
-                copyfile(input_file, tmp_nb_converted.name)
-            md_file = _run_rmarkdown(tmp_nb_converted.name, tmp_dir, params)
+                copyfile(input_file, tmp_nb_converted)
+
+            md_file = _run_rmarkdown(tmp_nb_converted, tmp_dir, params)
             run_pandoc(md_file, output_file, res_path=[nb_dir, tmp_dir])
