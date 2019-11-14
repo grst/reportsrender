@@ -3,10 +3,10 @@ from reportsrender.index import _get_title
 
 
 def test_run_rmarkdown(tmp_path):
-    """Test that running Rmarkdown generates a .utf8.md file. """
+    """Test that running Rmarkdown generates a .md file. """
     in_file = "notebooks/01_generate_data.Rmd"
     md_file = _run_rmarkdown(in_file, tmp_path)
-    assert md_file.endswith(".utf8.md")
+    assert md_file.endswith(".md")
     with open(md_file) as f:
         text = f.read()
         assert "library" in text
