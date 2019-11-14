@@ -47,7 +47,9 @@ def build_index(
     md.append("# " + title)
     md.extend(
         [
-            " * [{name}]({link})".format(name=_get_title(f), link=urljoin(rel_dir, f))
+            " * [{name}]({link})".format(
+                name=_get_title(f), link="/".join([rel_dir, os.path.basename(f)])
+            )
             for f in html_files
         ]
     )

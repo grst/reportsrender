@@ -22,22 +22,22 @@ def test_get_title(tmpdir):
 
 
 def test_build_index(tmpdir):
-    # html_files = [str(html_rmd), str(html_papermill)]
-    # build_index(html_files, str(index_md))
-    # build_index(html_files, str(index_md2), title="My Index", rel_dir="results")
-    # build_index(html_files, str(index_html))
-    #
-    # for idx in [index_md, index_md2, index_html]:
-    #     content = idx.read()
-    #     assert "A Novel Approach to Finding Black Cats in Dark Rooms (Rmd)" in content
-    #     assert (
-    #         "A Novel Approach to Finding Black Cats in Dark Rooms (Papermill)"
-    #         in content
-    #     )
-    #     assert "papermill.html" in content
-    #     assert "rmd.html" in content
-    #
-    # assert "Index</h1>" in index_html.read()
-    # assert "results/papermill.html" in index_md2.read()
-    # assert index_md2.read().startswith("# My Index")
-    pass
+    out_md = tmpdir.join("index.md")
+    out_md2 = tmpdir.join("index_2.md")
+    out_html = tmpdir.join("index.html")
+    html_files = ["html/01_generate_data.rmd.html", "html/02_analyze_data.rmd.html"]
+
+    build_index(html_files, str(out_md))
+    build_index(html_files, str(out_md2), title="My Index", rel_dir="results")
+    build_index(html_files, str(out_html))
+
+    for idx in [out_md, out_md2, out_html]:
+        content = idx.read()
+        assert "First notebook (in R)" in content
+        assert "The second notebook" in content
+        assert "01_generate_data.rmd.html" in content
+        assert "02_analyze_data.rmd.html" in content
+
+    assert "Index</h1>" in out_html.read()
+    assert "results/01_generate_data.rmd.html" in out_md2.read()
+    assert out_md2.read().startswith("# My Index")
