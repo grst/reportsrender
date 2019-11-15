@@ -21,9 +21,7 @@ def _get_title(html_file):
         return title.text
 
 
-def build_index(
-    html_files: List[str], output_file: str, title: str = "Index", rel_dir: str = ""
-):
+def build_index(html_files: List[str], output_file: str, title: str = "Index"):
     """
     Create an index file referencing all specified html files.
 
@@ -38,17 +36,15 @@ def build_index(
         file to HTML.
     title
         H1-title of the page
-    rel_dir
-        Directory the documents will be stored in (relative
-        to the output HTML file. Default: the documents are stored
-        in the same directory as the index file.
     """
+    output_file = os.path.abspath(output_file)
     md = []
     md.append("# " + title)
     md.extend(
         [
             " * [{name}]({link})".format(
-                name=_get_title(f), link="/".join([rel_dir, os.path.basename(f)])
+                name=_get_title(f),
+                link=os.path.relpath(f, os.path.dirname(output_file)),
             )
             for f in html_files
         ]

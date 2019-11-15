@@ -28,7 +28,7 @@ def test_build_index(tmpdir):
     html_files = ["html/01_generate_data.rmd.html", "html/02_analyze_data.rmd.html"]
 
     build_index(html_files, str(out_md))
-    build_index(html_files, str(out_md2), title="My Index", rel_dir="results")
+    build_index(html_files, str(out_md2), title="My Index")
     build_index(html_files, str(out_html))
 
     for idx in [out_md, out_md2, out_html]:
@@ -39,5 +39,5 @@ def test_build_index(tmpdir):
         assert "02_analyze_data.rmd.html" in content
 
     assert "Index</h1>" in out_html.read()
-    assert "results/01_generate_data.rmd.html" in out_md2.read()
+    assert "html/01_generate_data.rmd.html" in out_md2.read()
     assert out_md2.read().startswith("# My Index")
