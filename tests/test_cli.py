@@ -44,7 +44,7 @@ def test_index_no_args():
 
 @pytest.mark.parametrize("filename", ["the_index.html", "index.md"])
 def test_index_paths(filename, tmpdir):
-    """Test if the index function works"""
+    """Test if the index subcommand works"""
     index_dir = tmpdir.mkdir("index")
     html_file1 = index_dir.join("html_file1.html")
     html_file2 = index_dir.join("html_file2.html")

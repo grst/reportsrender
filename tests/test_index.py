@@ -7,6 +7,7 @@ from ._util import tmpwd
 
 
 def test_get_title(tmpdir):
+    """Test that the title is correctly parsed from a HTML document. """
     html_file_1 = tmpdir.join("html1.html")
     html_file_2 = tmpdir.join("html2.html.html")
     html_file_1.write(
@@ -25,6 +26,7 @@ def test_get_title(tmpdir):
 
 
 def test_build_index(tmpdir):
+    """Test that the index file is correctly built. """
     out_md = tmpdir.join("index.md")
     out_md2 = tmpdir.join("index_2.md")
     out_html = tmpdir.join("index.html")
@@ -48,20 +50,20 @@ def test_build_index(tmpdir):
 
 def test_index_paths(tmpdir):
     """Test if the index function correctly computes the
-        relative paths to the HTML files.
+    relative paths to the HTML files.
 
-        Our mock file structure
+    Our mock file structure
 
-        ```
-            .
-            ├── html2
-            │   └── html_file2.html
-            └── index
-                ├── html_file3.html
-                ├── html1
-                │   └── html_file1.html
-                └── index.md
-        ```
+    ```
+        .
+        ├── html2
+        │   └── html_file2.html
+        └── index
+            ├── html_file3.html
+            ├── html1
+            │   └── html_file1.html
+            └── index.md
+    ```
 
     """
     index_dir = tmpdir.join("index").mkdir()

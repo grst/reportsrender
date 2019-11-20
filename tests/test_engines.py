@@ -13,6 +13,7 @@ ENGINES = [("rmd", render_rmd), ("papermill", render_papermill)]
 
 @pytest.mark.parametrize("engine,render_fun", ENGINES)
 def test_title_from_meta(engine, render_fun, tmpdir):
+    """Test that the title is correctly obtained from the notebook metadata"""
     if engine == "papermill":
         pytest.skip(
             "for now this does not work with papermill engine due to jqm/pandoc#5905"
@@ -42,6 +43,7 @@ def test_title_from_meta(engine, render_fun, tmpdir):
 
 @pytest.mark.parametrize("engine,render_fun", ENGINES)
 def test_title_from_filename(engine, render_fun, tmpdir):
+    """Test that the title falls back to the filename, if no metadata is available"""
     rmd = tmpdir.join("{}.Rmd".format(engine))
     html = tmpdir.join("{}.html".format(engine))
 
