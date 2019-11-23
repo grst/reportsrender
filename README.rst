@@ -35,13 +35,13 @@ Getting started
 
 ::
 
-    reportsrender rmd my_notebook.Rmd report.html
+    reportsrender --engine=rmd my_notebook.Rmd report.html
 
 * Execute a parametrized jupyter notebook with papermill
 
 ::
 
-    reportsrender papermill jupyter_notebook.ipynb report.html --params="data_file=table.tsv"
+    reportsrender --engine=papermill jupyter_notebook.ipynb report.html --params="data_file=table.tsv"
 
 
 **TODO** add example notebooks.
