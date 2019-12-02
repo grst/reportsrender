@@ -1,9 +1,10 @@
 language: c
 env:
-  - PYTHON_VER=3.6
-  - PYTHON_VER=3.7
-  - R_VER=3.5
-  - R_VER=3.6
+  - PYTHON_VER=3.6 R_VER=3.5
+  - PYTHON_VER=3.6 R_VER=3.6
+  - PYTHON_VER=3.7 R_VER=3.5
+  - PYTHON_VER=3.7 R_VER=3.6
+  - PYTHON_VER=3.8 R_VER=3.6
 
 install:
   - sudo apt-get update
