@@ -25,7 +25,7 @@ install:
       r-bookdown
       black
       flit
-      pandoc
+      pandoc>=2.8
       `# required for testing only`
       matplotlib
       r-ggplot2
