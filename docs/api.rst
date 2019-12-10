@@ -14,5 +14,6 @@ Reportsrender provides a public API that can be used to execute and convert note
    render_rmd
    render_papermill
    run_pandoc
+   build_index
 
 

@@ -3,10 +3,30 @@ Features
 
 Execution engines
 -----------------
+Reportsrender comes with two execution engines:
+
+* **Rmarkdown.** This engine makes use of the `Rmarkdown package <https://rmarkdown.rstudio.com/>`_
+  implemented in R. Essentially, this engine calls
+  `Rscript -e "rmarkdown::render()"`. It supports 
+  Rmarkdown notebooks (`Rmd` format) and python notebooks
+  through `reticulate <https://rstudio.github.io/reticulate/>`_.
+
+* **Papermill.** This engine combines `papermill <https://github.com/nteract/papermill>`_
+  and `nbconvert <https://nbconvert.readthedocs.io/en/latest/>`_ to parametrize and 
+  execute notebooks. It supports any programming language for that a jupyter
+  kernel is installed. 
 
 
 Supported notebook formats
 --------------------------
+Reportsrender uses `jupytext <https://github.com/mwouts/jupytext>`_
+to convert between input formats. 
+Here is the full list of `supported formats <https://jupytext.readthedocs.io/en/latest/formats.html>`_.
+
+So no matter if you want to run an `Rmd` file with papermill, an `ipynb` with Rmarkdown or a
+`Hydrogen percent script <https://atom.io/packages/hydrogen>`_, reportsrender
+has got you covered. 
+
 
 
 Hiding cell inputs/outputs
@@ -44,7 +64,7 @@ tags to Rmarkdown options for all supported formats.
 Parametrized notebooks
 ----------------------
 
-
+ 
 Papermill engine:
 ^^^^^^^^^^^^^^^^^
 
@@ -126,7 +146,48 @@ Example (Python notebook stored as `.Rmd` file using *jupytext*):
 
 Sharing reports
 ---------------
-github pages...
+Reportsrender create self-contained HTML files 
+that can be easily shared, e.g. via email. 
+
+I do, however, recommend using `github pages <https://pages.github.com/>`_
+to upload and share your reports. A central website serves 
+as a *single point of truth* and elimiates the problem of 
+different versions of your reports being emailed around. 
+
+You can make use of `reportsrender index` to automatically generate 
+an index page listing multiple reports: 
+
+Say, you generated several reports and already put them into your 
+github-pages directory:
+
+::
+
+    gh-pages
+    ├── 01_preprocess_data.html
+    ├── 02_analyze_data.html
+    └── 03_visualize_data.htmlp
+
+Then you can generate an index file listing and linking to your reports by running
+
+::
+
+    reportsrender index --index gh-pages/index.html gh-pages/*.html
+
+For more details see :ref:`cli` and :meth:`reportsrender.build_index` 
+
+
+Password protection
+^^^^^^^^^^^^^^^^^^^
+Not all analyses can be shared publicly. Unfortunately, 
+github-pages does not support password protection. 
+
+There is `a workaround <https://stackoverflow.com/questions/27065192/how-do-i-protect-a-directory-within-github-pages>`_,
+though:
+
+As github-pages doesn't list directories, you can simply create
+a long, cryptic subdirectory, e.g. `t8rry6poj7ua6eujqpb5762ipoqoz8hk8hsec44s`
+and put your reports within. Only people with whom 
+you share the exact link will be able to access the site. 
 
 
 Combine notebooks into a pipeline

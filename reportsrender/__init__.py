@@ -14,3 +14,4 @@ if "flit" not in sys.argv[0]:
     from .papermill import render_papermill
     from .rmd import render_rmd
     from .pandoc import run_pandoc
+    from .index import build_index

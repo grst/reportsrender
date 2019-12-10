@@ -46,6 +46,7 @@ Getting started
 
 **TODO** add example notebooks.
 
+.. _cli:
 
 Usage from command line
 =======================
@@ -100,29 +101,18 @@ Conda (recommended):
 ^^^^^^^^^^^^^^^^^^^^
 As this package dependes on both R and Python packages, I recommend
 to install the package through `conda <https://docs.conda.io/en/latest/miniconda.html>`_.
-
-I yet need to create a conda package and upload it on conda-forge, but you can create the following environment
-and install the package:
+The following command will install reportsrender and all its dependencies in the 
+current conda environment: 
 
 ::
 
-    conda create -c bioconda -c conda-forge -n reportsrender \
-          "python>=3.6" \
-          "r-base>=3.5" \
-          r-rmarkdown \
-          r-reticulate \
-          r-bookdown \
-          flit \
-          pandoc
+    conda install -c conda-forge grst::reportsrender
 
-    conda activate reportsrender
-    flit installfrom github:grst/reportsrender
+If you prefer not to use conda, you can follow the approach below: 
 
 
-
-
-Manual install:
-^^^^^^^^^^^^^^^
+Manual installation:
+^^^^^^^^^^^^^^^^^^^^
 
 Get dependencies:
 """""""""""""""""
@@ -130,7 +120,9 @@ Get dependencies:
 * Python
 * `pandoc`_
 
-For the Rmarkdown render engine additionally:
+For the Rmarkdown render engine additionally
+(there is no need to install them if you are not going
+to use the Rmarkdown rendeirng engine:
 
 * R and the following packages:
 
@@ -139,6 +131,16 @@ For the Rmarkdown render engine additionally:
     rmarkdown
     reticulate
 
+then, 
+
+Install from  pip:
+==================
+
+::
+
+    pip install reportsrender
+
+or, 
 
 Install from github:
 """"""""""""""""""""

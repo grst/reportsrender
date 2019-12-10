@@ -18,6 +18,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 nitpicky = True  # Warn about broken links
 nitpick_ignore = [
     ("py:data", "typing.Optional"),
+    ("py:data", "typing.Collection"),
     ("py:class", "str"),
     ("py:class", "dict"),
 ]
