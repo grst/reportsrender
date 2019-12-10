@@ -1,0 +1,4 @@
+{
+    "python.pythonPath": "/home/sturm/anaconda3/envs/reportsrender_dev/bin/python",
+    "restructuredtext.confPath": "${workspaceFolder}/docs"
+}
