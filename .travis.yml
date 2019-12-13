@@ -19,21 +19,21 @@ install:
   - conda info -a
 
   - conda create -q -c bioconda -c conda-forge -n reportsrender
-      python=$PYTHON_VER
-      r-base=$R_VER
-      r-rmarkdown
-      r-reticulate
-      r-bookdown
-      black
-      flit
-      pandoc>=2.8
-      `# required for testing only`
-      matplotlib
-      r-ggplot2
-      pandas
-      pytest
-      r-dplyr
-      r-readr
+    python=$PYTHON_VER
+    r-base=$R_VER
+    r-rmarkdown
+    r-reticulate
+    r-bookdown
+    black
+    flit
+    pandoc>=2.8
+    `# required for testing only`
+    matplotlib
+    r-ggplot2
+    pandas
+    pytest
+    r-dplyr
+    r-readr
 
   - conda activate reportsrender
 
@@ -41,7 +41,17 @@ script:
   - black --check reportsrender
   - pip install .
   - cd tests && pytest
+  - reportsrender --engine=papermill examples/01_generate_data.ipynb
+    examples_html/01_generate_data.html --params="output_file=data.csv"
+  - reportsrender --engine=rmd examples/02_visualize_data.Rmd
+    examples_html/02_visualize_data.html --params="input_file=data.csv"
+  - reportsrender index --index examples_html/index.md examples_html/*.html
 
-
-
-
+deploy:
+  local_dir: examples_html
+  provider: pages
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  skip_cleanup: true
+  on:
+    branch: gh-pages

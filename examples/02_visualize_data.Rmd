@@ -1,0 +1,21 @@
+---
+title: "Visualize Data"
+params:
+  input_file: "data.csv"
+---
+
+```{r setup, include=FALSE}
+library(readr)
+library(ggplot2)
+```
+
+We defined the `input_file` parameter in the YAML header. This is documented
+in the [Rmarkdown user guide](https://bookdown.org/yihui/rmarkdown/parameterized-reports.html). 
+
+Now, we'll read-in the data and visualize it using `ggplot2`. 
+
+```{r, message=FALSE}
+iris_df = read_csv(params$input_file)
+ggplot(iris_df, aes(x=sepal_width, y=sepal_length, color=species)) + 
+  geom_point()
+```
