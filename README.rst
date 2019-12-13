@@ -44,8 +44,6 @@ Getting started
     reportsrender --engine=papermill jupyter_notebook.ipynb report.html --params="data_file=table.tsv"
 
 
-**TODO** add example notebooks.
-
 .. _cli:
 
 Usage from command line
@@ -99,8 +97,8 @@ Installation
 
 Conda (recommended):
 ^^^^^^^^^^^^^^^^^^^^
-As this package dependes on both R and Python packages, I recommend
-to install the package through `conda <https://docs.conda.io/en/latest/miniconda.html>`_.
+As this reportsrender dependes on both R and Python packages, I recommend
+to install it through `conda <https://docs.conda.io/en/latest/miniconda.html>`_.
 The following command will install reportsrender and all its dependencies in the 
 current conda environment: 
 
@@ -122,7 +120,7 @@ Get dependencies:
 
 For the Rmarkdown render engine additionally
 (there is no need to install them if you are not going
-to use the Rmarkdown rendeirng engine:
+to use the Rmarkdown rendeirng engine):
 
 * R and the following packages:
 
@@ -133,8 +131,9 @@ to use the Rmarkdown rendeirng engine:
 
 then, 
 
+
 Install from  pip:
-==================
+""""""""""""""""""
 
 ::
 

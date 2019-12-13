@@ -13,7 +13,7 @@ Reportsrender comes with two execution engines:
 
 * **Papermill.** This engine combines `papermill <https://github.com/nteract/papermill>`_
   and `nbconvert <https://nbconvert.readthedocs.io/en/latest/>`_ to parametrize and 
-  execute notebooks. It supports any programming language for that a jupyter
+  execute notebooks. It supports any programming language for which a jupyter
   kernel is installed. 
 
 
@@ -96,7 +96,7 @@ Rmarkdown engine:
 
 Example:
 
-* Declare the parameter to the yaml frontmatter.
+* Declare the parameter in the yaml frontmatter.
 * You can set default parameters that will be used when
   the notebook is executed interactively in Rstudio. They will be overwritten
   when running through `reportsrender`.
@@ -107,6 +107,7 @@ Example:
     title: My Document
     output: html_document
     params:
+
       input_file: '/path/to/default_file.csv'
     ---
 
@@ -171,7 +172,7 @@ Then you can generate an index file listing and linking to your reports by runni
 
 ::
 
-    reportsrender index --index gh-pages/index.html gh-pages/*.html
+    reportsrender index --index gh-pages/index.md gh-pages/*.html
 
 For more details see :ref:`cli` and :meth:`reportsrender.build_index` 
 
@@ -185,12 +186,19 @@ There is `a workaround <https://stackoverflow.com/questions/27065192/how-do-i-pr
 though:
 
 As github-pages doesn't list directories, you can simply create
-a long, cryptic subdirectory, e.g. `t8rry6poj7ua6eujqpb5762ipoqoz8hk8hsec44s`
+a long, cryptic subdirectory, e.g. `t8rry6poj7ua6eujqpb57`
 and put your reports within. Only people with whom 
 you share the exact link will be able to access the site. 
 
 
 Combine notebooks into a pipeline
 ---------------------------------
+Reportsrender is built with pipelines in mind. 
+You can easily combine individual analysis steps into a fully reproducible 
+pipeline using workflow engines such as `Nextflow <https://www.nextflow.io/>`_
+or `Snakemake <https://snakemake.readthedocs.io/en/stable/>`_. 
 
+A full example how such a pipeline might look like is available in 
+a dedicated GitHub repository: `universal_analysis_pipeline <https://github.com/grst/universal_analysis_pipeline/>`_. 
+It's based on Nextflow, but could easily be adapted to other pipelining engines. 
 

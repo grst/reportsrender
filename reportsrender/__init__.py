@@ -1,4 +1,4 @@
-"""Execute and Render notebooks as HTML reports. """
+"""Execute and render notebooks as HTML reports. """
 from get_version import get_version
 import sys
 
