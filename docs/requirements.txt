@@ -1,5 +1,1 @@
-sphinx-autodoc-typehints
-get_version
-papermill
-jupytext
-
+reportsrender[doc]
