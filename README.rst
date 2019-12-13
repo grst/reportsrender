@@ -1,18 +1,18 @@
-# Generate reproducible reports from Rmarkdown or jupyter notebooks
-
+Generate reproducible reports from Rmarkdown or jupyter notebooks
+=================================================================
 |travis| |docs| |black|
 
 .. |travis| image:: https://travis-ci.com/grst/reportsrender.svg?branch=master
-:target: https://travis-ci.com/grst/reportsrender
-:alt: Build Status
+    :target: https://travis-ci.com/grst/reportsrender
+    :alt: Build Status
 
 .. |docs| image:: https://readthedocs.org/projects/reportsrender/badge/?version=latest
-:target: https://reportsrender.readthedocs.io/en/latest/?badge=latest
-:alt: Documentation Status
-
+    :target: https://reportsrender.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+    
 .. |black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
-:target: https://github.com/psf/black
-:alt: The uncompromising python formatter
+    :target: https://github.com/psf/black
+    :alt: The uncompromising python formatter
 
 Reportsrender allows to create reproducible, consistently looking HTML reports from
 both jupyter notebooks and Rmarkdown files. It makes use of `papermill <https://github.com/nteract/papermill>`_
@@ -20,32 +20,34 @@ and `Rmarkdown <https://bookdown.org/yihui/rmarkdown/>`_ to execute notebooks an
 `Pandoc <https://pandoc.org/>`_ to convert them to HTML.
 
 **Features**:
-
-- two execution engines: papermill and Rmarkdown.
-- support any format supported by `jupytext <https://github.com/mwouts/jupytext>`_.
-- create self-contained HTML that can be shared easily.
-- hide inputs and/or outputs of cells.
-- parametrized reports
+ * two execution engines: papermill and Rmarkdown.
+ * support any format supported by `jupytext <https://github.com/mwouts/jupytext>`_.
+ * create self-contained HTML that can be shared easily.
+ * hide inputs and/or outputs of cells.
+ * parametrized reports
 
 See the `documentation <https://reportsrender.readthedocs.io/>`_ for more details!
 
-# Getting started
+Getting started
+================
 
-- Execute an Rmarkdown document to HTML using the Rmarkdown engine
+* Execute an rmarkdown document to HTML using the Rmarkdown engine
 
 ::
 
     reportsrender --engine=rmd my_notebook.Rmd report.html
 
-- Execute a parametrized jupyter notebook with papermill
+* Execute a parametrized jupyter notebook with papermill
 
 ::
 
     reportsrender --engine=papermill jupyter_notebook.ipynb report.html --params="data_file=table.tsv"
 
+
 .. _cli:
 
-# Usage from command line
+Usage from command line
+=======================
 
 ::
 
@@ -85,20 +87,27 @@ See the `documentation <https://reportsrender.readthedocs.io/>`_ for more detail
       papermill             Use `papermill` to execute the notebook. Works for every
                             kernel available in the jupyter installation.
 
-# Installation
+
+
+
+
+
+Installation
+============
 
 Conda (recommended):
 ^^^^^^^^^^^^^^^^^^^^
-As reportsrender depends on both R and Python packages, I recommend
+As this reportsrender dependes on both R and Python packages, I recommend
 to install it through `conda <https://docs.conda.io/en/latest/miniconda.html>`_.
-The following command will install reportsrender and all its dependencies in the
-current conda environment:
+The following command will install reportsrender and all its dependencies in the 
+current conda environment: 
 
 ::
 
     conda install -c conda-forge grst::reportsrender
 
-If you prefer not to use conda, you can follow the approach below:
+If you prefer not to use conda, you can follow the approach below: 
+
 
 Manual installation:
 ^^^^^^^^^^^^^^^^^^^^
@@ -106,30 +115,31 @@ Manual installation:
 Get dependencies:
 """""""""""""""""
 
-- Python
-- `pandoc`_
+* Python
+* `pandoc`_
 
 For the Rmarkdown render engine additionally
 (there is no need to install them if you are not going
-to use the Rmarkdown rendering engine):
+to use the Rmarkdown rendeirng engine):
 
-- R and the following packages:
+* R and the following packages:
 
 ::
 
     rmarkdown
     reticulate
 
-then,
+then, 
 
-Install from pip:
+
+Install from  pip:
 """"""""""""""""""
 
 ::
 
     pip install reportsrender
 
-or,
+or, 
 
 Install from github:
 """"""""""""""""""""
@@ -138,3 +148,6 @@ Install from github:
 
     pip install flit
     flit installfrom github:grst/reportsrender
+
+
+
